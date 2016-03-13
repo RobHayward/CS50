@@ -1,0 +1,194 @@
+---
+title: "CS50"
+author: "Rob Hayward"
+date: "25 February 2016"
+output: 
+  html_document: 
+    fig_caption: yes
+    highlight: kate
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+#Introduction
+Binary works on multiples of 2. Computer will just substitute light on and off for ones and twos. ASCI is a mapping from every number to every letter. A computer will make the link between the binary code and the *higher level* meaning.  This higher level meaning could be numbers, letter or things like images or sound etc. RGB will provide the mapping of binary into colours. 
+
+There needs to be an algorithm to map the binary data to the higher level meaning. The algorithm should not only be **correct** but it shoudl also be **efficient**.  For a phone book, tear the problem in half each time rather than go from one page to the next.  If the phonebook doubles in size, the task will need one more step if it is the logarithmic process of cutting in half; it will need many more steps for the step-by-step process. This is *computational thinking*. It involves making sure that large problems can be solved. In theory this also work in counting the room by pairing, adding the numbers and move one person forward to repeat. See video. Again uses a logarithmic process. 
+
+Two parts to computer code: statement and action. 
+
+The largest value that you can represent with eigtht bits or one byte is 256 but only if you start from 1. 
+
+##ASCI
+The binary can be represented by bulbs or capacitors. To represent things in binary think about the translation. a to z can be a regular number and can then be represented by a binary number. It is also necessary get upper case letters. 1963 American National Standards Institute (ANSI) proposed American Standard Code for INformation (ACSII). This is designed as a seven-bit encoding. Each character is represented by a combination of seven zeros and ones. For seven bits, there are $2^7$ or 128 characters. 
+
+* a-z = 26
+* A-Z = 26
+* 0-9 = 10
+* ..?^&:; = 32
+* Spacebar is = 1
+* Total so far is = 95
+
+This leaves 33.  Also need control characters for old system. The number zero and 237 are special. There are relationships between the binary code and the numbers and letters. 
+
+*Unicode* is a response to the limitations of ASCII. 
+
+
+#Week 2
+Introducitng a few concepts
+
+* Compiler: Takes source code and produces object code. Object code is zeros and ones. 
+
+```
+#include <stdio.h>
+
+int main(void)
+{
+  printf("hello, world\n"); 
+}
+```
+The first line gives access to the standard c library. 
+
+The compiler used here is called `cLang` for the C language. 
+
+The first programming file will be `./a.out`.  This is the name of the file. We need to specifiy the command line arguments. 
+
+```
+clang -o hello hello.c
+```
+
+Now we can use another programme called `make` will make a file. Make is a utility for compiling source code. Make will make an executable file. Make will invoke the compiler.  Compilers can be called `Clang`,  Others are `gcc` and `cc`. There are a number of options that can be passed to clang. Clang, by defalt, names its executables `a.out`. Using the `-o` flag will name the executable the same as the source code. The flat `-w` controls the sort of warnings that are issued. `-Wall` will turn all the warnings on. `-ggdb` this will allow a special de-bugger to run. `-l` will include the libraries. For example, `-lcs50` will ensure that the cS50 library is included when compiled. This ensures that the library is linked with the programme. 
+
+
+```
+string s = "Hanaah":
+``` 
+
+will create a string called w.  The semi-colon will just terminate the line. The percentage is just a placeholder `%s` holds a string, `%i` holds an integer, `%f` holds a floating point number. 
+
+Convention in C is to use`//` as the introduction to a comment. 
+A virtual machine lets you run one operating environment inside of another. Makes sure that everyone has the same environment. 
+
+## The C language
+This comes from [how stuff works](http://computer.howstuffworks.com/c1.htm). 
+
+C is a **compiler language**. This means that C programs must be run through a **C Compiler** to turn the code into something that is **executable** and can be run.  The compiler is "CC" or "GCC" on linux. Having created a file called `samp.c` for the first code, this is run with 
+
+The file 
+```
+#include <stdio.h>
+
+int.main()
+{
+  printf("This is output from my first program!\n");
+  return(0);
+}
+```
+
+The `stdio.h` is the fle with standard input-output I/O library. Input from keyboard and output to the screen. `int.main()` declares the main function. 
+
+```
+ggc samp.c -o samp
+``` 
+
+This invokes the c-compiler gcc, compiles `samp.c` and places the executable file under the name `samp`. To run, type `samp` or `./samp`
+
+###Libraries
+There are numerous libaries that can be used. A library is a binary file that is produce by linking together a series of *object files* using a tool called a *linker*.  Object files are `.o` files in C source code. There are two types of file:
+
+* header files (`.h`): declares the libraries resources that are available to use. These are functions, variables, strucs. These are the interface. No function implementations. There is an important computer science principle called *information hiding* or *encapsulation*. 
+* implementation files (`.c`).  These are also header files. If you declare some new functions in `mystring.h`, you define these in `mystring.c`.  Information hiding says that this separation will prevent user needing to know the internal working of the code. 
+
+The header and implementation files are then compiled to procuce object files that are linked together to produce the binary library file. The binary writer will then ship the binary along with the header files to programmers using the library.  Implementation files are not usually need unless the library is recompiled from scratch. 
+
+To use the library, it is necessary to 
+
+* include the library's header `#`. This will depend on where the files are. The default directory is `usr/include--`, `<stdio.h>` is used.  If the files are in the same directory as the code, double headers are used `"mylib.h"`.  
+* link to the binary library. To solve this use `-l[lib]` where lib is the name of the library. 
+
+##Precedence
+There are two types of decrement operators: 
+
+* prefix `++i` Used in for loops. Increased and then used.   
+* suffix `i++`  Current value is used and then increased by one. 
+* dereference operator `*` has a presedence over math operators. 
+
+###Rules 
+
+* Inner parentheses to outer
+* `i++`, `++i`
+* pointers `*x` or `&x`
+* math
+
+###Type casting
+This will change an object from one type to another. Data type determines how th computer interperts and deals with the variable. Casting a floating point to an integer will remove any information after the decimal.  In casting from one to another some information is lost. From a double to a float will also lose data. A double can store 53 signficanat bits while a float has only 24. 
+
+Explicit casting come from putting the datatype before the variable, like `(int)x`.  There is also implicit casting when this is done as part of an operation. It is always possible to assign a less precise type to a more precise type. 
+
+###Variables
+In C, variables must be declared. This is done by writing one of the data types and then a variable name. For example `in x;`.  To make things easier declare and assign at the same time: 
+
+```
+int x = 2; 
+int y = x + 1;
+int x = 3
+```
+y will maintain its value. It was originally assigned as 3 and this does not change. 
+
+The variable should be declared outside a loop so that it is not re-set each time. 
+
+###Mario requirents
+do while loop
+```
+int n;
+
+do 
+{
+
+ n = GetInt();
+}
+while (n is invalid):
+```
+For loop
+```
+for (initialisation; condition; update)
+{
+
+  //code inside
+  
+}
+
+//code outside
+```
+
+##Operrators
+The value on the right get assigned to the value on the left. Modulous operator will provide the reminder. `%` will do this. 
+
+It is possible to write `x = x * 5` as `x *= 5`.  Other operators can be used in the same way. This is a short-hand. `x++` will increment x by one and `x--` will increment x downwards by one. 
+
+There are two types of Boolean expressions: logical and relational. 
+
+##Conditional statements
+```
+int x; 
+if (expr)
+{
+  x = 5;
+}
+  else
+{
+  x = 6;
+}
+```
+is the same as `int x = (expr) ? 5 : 6;`. If the expression is true write 5, if not write 6. 
+
+A for loop is of the form
+```
+for (int i = 0; i < 10; i++)
+{
+
+}
+```
+or for (start, expression, increment)
+
+
